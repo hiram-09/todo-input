@@ -1,0 +1,80 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="todo-input">
+    <template>
+    <style>
+      :host {
+        display: flex;
+      }
+      paper-input{
+        --paper-input-container-input:{
+          width: 32em;
+          
+          @apply --todo-input-container-input;    
+        } 
+        --paper-input-container:{
+          padding: 30px 0px 0px 0px;
+        }
+        --paper-input-container-underline: {
+            border-color: white;
+        }
+        --paper-input-container-underline-focus: {
+            border-color: white;
+        }
+      }
+      paper-button{
+        --paper-button:{
+          padding: 15px 20px 15px 20px;
+        }
+      }
+      paper-button.indigo {
+        background-color: #117a8b;
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+          background-color: white !important;
+          color: white !important;
+        };
+      }
+    </style>
+    <paper-input id="paperInput" label="Agrega una nueva tarea" no-label-float></paper-input>
+    <paper-button raised class="indigo" on-click="agregar">Agregar</paper-button>
+  </template>
+
+    <script>
+        /**
+         * `todo-input`
+         * Elemento que contiene el input y el boton agregar
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class TodoInput extends Polymer.Element {
+            static get is() {
+                return 'todo-input';
+            }
+            static get properties() {
+                return {
+                    inputValue: {
+                        type: String,
+                        value: '',
+                        notify: true
+                    }
+                };
+            }
+            agregar() {
+                let inputVal = this.$.paperInput;
+                if (inputVal.value !== '') {
+                    this.inputValue = inputVal.value;
+                    inputVal.value = '';
+                } else {
+                    alert("El campo no puede ir vacío");
+                }
+            }
+        }
+
+        window.customElements.define(TodoInput.is, TodoInput);
+    </script>
+</dom-module>
